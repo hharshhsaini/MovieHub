@@ -1,0 +1,488 @@
+/* ========================================
+   MOVIEHUB INTRO ANIMATION
+   Orange/Black Premium Theme
+======================================== */
+
+/* ========================================
+   INTRO OVERLAY
+======================================== */
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000000;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#intro-overlay.fade-out {
+    animation: introFadeOut 1s ease forwards;
+}
+
+#intro-overlay.hidden {
+    display: none !important;
+}
+
+@keyframes introFadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* ========================================
+   ORANGE GLOW / AMBIENT EFFECT
+======================================== */
+.intro-fog {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 144, 0, 0.15) 0%,
+        rgba(255, 100, 0, 0.1) 30%,
+        rgba(0, 0, 0, 0) 70%
+    );
+    animation: fogPulse 3s ease-in-out infinite;
+}
+
+.intro-fog-2 {
+    background: radial-gradient(
+        ellipse at 20% 80%,
+        rgba(255, 165, 0, 0.12) 0%,
+        rgba(0, 0, 0, 0) 50%
+    ),
+    radial-gradient(
+        ellipse at 80% 20%,
+        rgba(255, 120, 0, 0.08) 0%,
+        rgba(0, 0, 0, 0) 50%
+    );
+    animation: fogPulse2 4s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+@keyframes fogPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+}
+
+@keyframes fogPulse2 {
+    0%, 100% { opacity: 0.3; transform: scale(1.1); }
+    50% { opacity: 0.7; transform: scale(1); }
+}
+
+/* Vignette effect */
+#intro-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 30%,
+        rgba(0, 0, 0, 0.95) 100%
+    );
+    pointer-events: none;
+}
+
+/* ========================================
+   INTRO CONTENT
+======================================== */
+.intro-content {
+    text-align: center;
+    z-index: 10;
+    transform: translateY(-20px);
+}
+
+/* ========================================
+   LOGO TITLE - ORANGE THEME
+======================================== */
+.stranger-title {
+    font-family: 'Anton', 'Arial Black', Impact, sans-serif;
+    font-size: clamp(3rem, 12vw, 8rem);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    line-height: 1.1;
+    opacity: 0;
+    transform: scale(0.5);
+    animation: titleZoomIn 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.stranger-title .letter {
+    display: inline-block;
+    color: #ffffff;
+    text-shadow: 
+        0 0 10px rgba(255, 144, 0, 0.5),
+        0 0 20px rgba(255, 144, 0, 0.3);
+}
+
+/* "HUB" letters get orange background */
+.stranger-title .letter:nth-child(7),
+.stranger-title .letter:nth-child(8),
+.stranger-title .letter:nth-child(9) {
+    background: #ff9000;
+    color: #000000;
+    padding: 0.05em 0.15em;
+    margin-left: 0.05em;
+    border-radius: 8px;
+    text-shadow: none;
+    box-shadow: 
+        0 0 20px rgba(255, 144, 0, 0.6),
+        0 0 40px rgba(255, 144, 0, 0.3);
+}
+
+.stranger-title .letter.space {
+    width: 0.2em;
+    background: none;
+    box-shadow: none;
+}
+
+/* Orange glow behind title */
+.stranger-title::after {
+    content: '';
+    position: absolute;
+    inset: -80px;
+    background: radial-gradient(
+        ellipse at center,
+        rgba(255, 144, 0, 0.2) 0%,
+        transparent 60%
+    );
+    z-index: -1;
+    animation: glowPulse 2s ease-in-out infinite alternate;
+    animation-delay: 1s;
+}
+
+@keyframes glowPulse {
+    0% { opacity: 0.4; transform: scale(1); }
+    100% { opacity: 0.8; transform: scale(1.15); }
+}
+
+/* Main title animation */
+@keyframes titleZoomIn {
+    0% {
+        opacity: 0;
+        letter-spacing: 0.8em;
+        transform: scale(0.5);
+        filter: blur(15px);
+    }
+    30% {
+        opacity: 0.7;
+        filter: blur(5px);
+    }
+    60% {
+        opacity: 1;
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        letter-spacing: 0.08em;
+        transform: scale(1);
+        filter: blur(0);
+    }
+}
+
+/* ========================================
+   INTRO SUBTITLE
+======================================== */
+.intro-subtitle {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(0.8rem, 2vw, 1.1rem);
+    color: #666666;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-top: 30px;
+    opacity: 0;
+    animation: subtitleFadeIn 0.8s ease forwards;
+    animation-delay: 1.8s;
+}
+
+@keyframes subtitleFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   SKIP INTRO BUTTON
+======================================== */
+.skip-intro {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 144, 0, 0.1);
+    border: 1px solid rgba(255, 144, 0, 0.4);
+    color: #ff9000;
+    padding: 12px 24px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    animation: skipFadeIn 0.5s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.skip-intro:hover {
+    background: rgba(255, 144, 0, 0.2);
+    border-color: #ff9000;
+    color: #ffaa00;
+    box-shadow: 0 0 25px rgba(255, 144, 0, 0.3);
+}
+
+.skip-intro:focus {
+    outline: 2px solid #ff9000;
+    outline-offset: 2px;
+}
+
+@keyframes skipFadeIn {
+    to { opacity: 1; }
+}
+
+/* ========================================
+   MAIN APP - SMOOTH ENTRANCE
+   Note: Avoid transform on this element as it breaks fixed positioning for children
+======================================== */
+#moviehub-app {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+#moviehub-app.visible {
+    opacity: 1;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+@media (max-width: 768px) {
+    .stranger-title {
+        font-size: clamp(2rem, 10vw, 4.5rem);
+        letter-spacing: 0.15em;
+    }
+    
+    .stranger-title .letter:nth-child(7),
+    .stranger-title .letter:nth-child(8),
+    .stranger-title .letter:nth-child(9) {
+        padding: 0.03em 0.1em;
+        border-radius: 5px;
+    }
+    
+    .intro-subtitle {
+        font-size: 0.75rem;
+        letter-spacing: 0.25em;
+        margin-top: 20px;
+    }
+    
+    .skip-intro {
+        top: 20px;
+        right: 20px;
+        padding: 10px 18px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stranger-title {
+        font-size: clamp(1.8rem, 9vw, 3rem);
+        letter-spacing: 0.1em;
+    }
+    
+    .stranger-title .letter:nth-child(7),
+    .stranger-title .letter:nth-child(8),
+    .stranger-title .letter:nth-child(9) {
+        padding: 0.02em 0.08em;
+        border-radius: 4px;
+    }
+    
+    .intro-content {
+        padding: 0 15px;
+    }
+    
+    .intro-subtitle {
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        padding: 0 10px;
+    }
+    
+    .skip-intro {
+        top: 15px;
+        right: 15px;
+        padding: 8px 14px;
+        font-size: 10px;
+    }
+    
+    .skip-intro i {
+        display: none;
+    }
+}
+
+/* ========================================
+   REDUCED MOTION SUPPORT
+======================================== */
+@media (prefers-reduced-motion: reduce) {
+    .stranger-title,
+    .intro-subtitle,
+    .skip-intro,
+    .intro-fog,
+    .intro-fog-2,
+    #intro-overlay,
+    #moviehub-app {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .stranger-title {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+        letter-spacing: 0.08em !important;
+        filter: none !important;
+    }
+    
+    #moviehub-app.visible {
+        opacity: 1 !important;
+        transform: scale(1) !important;
+        filter: none !important;
+    }
+}
+
+
+/* ========================================
+   CLICK TO ENTER SCREEN
+======================================== */
+#enter-screen {
+    position: fixed;
+    inset: 0;
+    background: #000000;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#enter-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.enter-content {
+    text-align: center;
+    animation: enterPulse 2s ease-in-out infinite;
+}
+
+@keyframes enterPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.enter-icon {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #ff9000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 30px;
+    font-size: 36px;
+    color: #ff9000;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 30px rgba(255, 144, 0, 0.3);
+}
+
+#enter-screen:hover .enter-icon {
+    background: #ff9000;
+    color: #000000;
+    transform: scale(1.1);
+    box-shadow: 0 0 50px rgba(255, 144, 0, 0.5);
+}
+
+.enter-title {
+    font-family: 'Anton', Impact, sans-serif;
+    font-size: clamp(2rem, 8vw, 4rem);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 15px;
+}
+
+.enter-title span {
+    background: #ff9000;
+    color: #000000;
+    padding: 0 10px;
+    border-radius: 6px;
+}
+
+.enter-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    color: #888888;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 20px;
+    animation: textBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes textBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.enter-hint {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    color: #ff9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Pause intro animations until enter screen is clicked */
+#intro-overlay.paused .stranger-title,
+#intro-overlay.paused .intro-subtitle,
+#intro-overlay.paused .skip-intro,
+#intro-overlay.paused .intro-fog {
+    animation-play-state: paused !important;
+    opacity: 0;
+}
+
+#intro-overlay.paused {
+    display: none;
+}
+
+#intro-overlay.playing {
+    display: flex;
+}
+
+#intro-overlay.playing .stranger-title,
+#intro-overlay.playing .intro-subtitle,
+#intro-overlay.playing .skip-intro,
+#intro-overlay.playing .intro-fog {
+    animation-play-state: running;
+}

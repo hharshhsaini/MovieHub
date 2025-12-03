@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moviehub — Discover. Decide. Dive in.</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/intro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Anton&display=swap" rel="stylesheet">
+    <!-- Stranger Things style font -->
+    <link href="https://fonts.cdnfonts.com/css/itc-benguiat" rel="stylesheet">
+</head>
+<body>
+    <!-- CLICK TO ENTER SCREEN (ensures audio can play) -->
+    <div id="enter-screen">
+        <div class="enter-content">
+            <div class="enter-icon">
+                <i class="fa-solid fa-play"></i>
+            </div>
+            <h2 class="enter-title">MOVIE<span>HUB</span></h2>
+            <p class="enter-text">Click anywhere to enter</p>
+        </div>
+    </div>
+
+    <!-- INTRO ANIMATION OVERLAY -->
+    <div id="intro-overlay" class="paused">
+        <!-- Orange glow effect layers -->
+        <div class="intro-fog"></div>
+        <div class="intro-fog intro-fog-2"></div>
+        
+        <!-- Centered logo content -->
+        <div class="intro-content">
+            <h1 class="stranger-title">
+                <span class="letter">M</span><span class="letter">O</span><span class="letter">V</span><span class="letter">I</span><span class="letter">E</span>
+                <span class="letter space"></span>
+                <span class="letter">H</span><span class="letter">U</span><span class="letter">B</span>
+            </h1>
+            <p class="intro-subtitle">Discover. Decide. Dive in.</p>
+        </div>
+        
+        <!-- Skip Intro Button -->
+        <button class="skip-intro" id="skipIntro" aria-label="Skip intro animation">
+            Skip Intro <i class="fa-solid fa-forward"></i>
+        </button>
+        
+        <!-- Intro Audio -->
+        <audio id="introAudio" preload="auto">
+            <source src="intro.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- 
+         MAIN APP CONTENT (hidden initially)
+     -->
+    <div id="moviehub-app">
+        <!-- Live Background Hero Section -->
+        <div class="hero-background" id="heroBackground">
+            <div class="poster-grid" id="posterGrid"></div>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <header>
+            <div class="header-content">
+                <h1 class="mainheading"><span class="logo-movie">Movie</span><span class="logo-hub">hub</span></h1>
+                <p class="tagline">Discover. Decide. Dive in.</p>
+                
+                <form class="search-bar" role="search" aria-label="Search movies">
+                    <i class="fa fa-search search-icon"></i>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Search for Movies or Series..." 
+                        aria-label="Search for movies or series"
+                        autocomplete="off"
+                    >
+                    <button type="submit" id="searchBtn" aria-label="Search">
+                        <i class="fa fa-arrow-right"></i>
+                    </button>
+                </form>
+                
+                <div class="genre-filters" role="group" aria-label="Filter by genre">
+                    <button class="genre-btn active" data-genre="all">All</button>
+                    <button class="genre-btn" data-genre="crime">Crime</button>
+                    <button class="genre-btn" data-genre="sci-fi">Sci-Fi</button>
+                    <button class="genre-btn" data-genre="comedy">Comedy</button>
+                    <button class="genre-btn" data-genre="adventure">Adventure</button>
+                </div>
+                
+                <div class="sort-controls" role="group" aria-label="Sort results">
+                    <label for="sortSelect">Sort by:</label>
+                    <select id="sortSelect" aria-label="Sort movies">
+                        <option value="relevance">Relevance</option>
+                        <option value="a-z">A–Z</option>
+                        <option value="z-a">Z–A</option>
+                        <option value="year-desc">Year (Newest)</option>
+                        <option value="year-asc">Year (Oldest)</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section class="results-section">
+                <div class="section-header">
+                    <button class="back-btn" id="backBtn" hidden aria-label="Go back to home">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 class="section-title" id="resultsTitle">Featured Movies</h2>
+                </div>
+                <div class="movie-grid" id="movieGrid" role="list" aria-live="polite"></div>
+                <div class="empty-state" id="emptyState" hidden>
+                    <i class="fa-solid fa-film"></i>
+                    <p>No movies found. Try a different search!</p>
+                </div>
+                <div class="loading" id="loading" hidden>
+                    <div class="loader"></div>
+                    <p>Loading...</p>
+                </div>
+            </section>
+
+            <div class="pagination" id="pagination" hidden>
+                <button id="prevBtn" class="page-btn" aria-label="Previous page">
+                    <i class="fa-solid fa-chevron-left"></i> Prev
+                </button>
+                <span id="pageInfo" aria-live="polite">Page 1</span>
+                <button id="nextBtn" class="page-btn" aria-label="Next page">
+                    Next <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </main>
+
+        <button class="fab-favorites" id="fabFavorites" aria-label="View favorites">
+            <i class="fa-solid fa-heart"></i>
+            <span class="fav-count" id="favCount">0</span>
+        </button>
+    </div>
+
+    <!--   MODAL - Outside moviehub-app to fix positioning-->
+    <div class="modal-overlay" id="modalOverlay" hidden aria-hidden="true">
+        <div class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+            <button class="modal-close" id="modalClose" aria-label="Close modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-content" id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="js/intro.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
